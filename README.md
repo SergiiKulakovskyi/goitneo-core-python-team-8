@@ -1,19 +1,22 @@
-add _name_ _phone_
+# Персональний помічник (CodeCrafters)
 
-change _name_ _phone_
+## Команди 
+`add <name> <phone>`
 
-phone _name_
+`change <name> <phone>`
 
-all
+`phone <name>`
 
-add-birthday _name_ _date_
+`all`
 
-show-birthday _name_
+`add-birthday <name> <date>`
 
-birthdays
+`show-birthday <name>`
 
-close
+`birthdays`
 
-exit
+`close`
 
-hello
+`exit`
+
+`hello`
