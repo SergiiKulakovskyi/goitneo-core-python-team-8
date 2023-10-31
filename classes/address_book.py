@@ -33,7 +33,7 @@ class AddressBook(UserDict):
 
         for record in self.data.values():
             name = record.name.value
-            if record.birthday.value is None:
+            if record.birthday is None:
                 continue
             birthday = record.birthday.value.date()
             birthday_this_year = birthday.replace(year=today.year)
