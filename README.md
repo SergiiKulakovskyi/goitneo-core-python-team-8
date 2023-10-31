@@ -1,19 +1,19 @@
-# add <name> <phone>
+add _name_ _phone_
 
-# change <name> <phone>
+change _name_ _phone_
 
-# phone <name>
+phone _name_
 
-# all
+all
 
-# add-birthday <name> <date>
+add-birthday _name_ _date_
 
-# show-birthday <name>
+show-birthday _name_
 
-# birthdays
+birthdays
 
-# close
+close
 
-# exit
+exit
 
-# hello
+hello
