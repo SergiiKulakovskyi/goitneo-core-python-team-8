@@ -20,3 +20,6 @@
 `exit`
 
 `hello`
+
+
+On close/exit command executed it will save files to data/file_name

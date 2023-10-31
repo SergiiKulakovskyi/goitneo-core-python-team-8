@@ -1,5 +1,3 @@
-from classes.address_book import AddressBook
-
 from handlers.add_contact import add_contact
 from handlers.change_contact import change_contact
 from handlers.show_phone import show_phone
@@ -7,6 +5,7 @@ from handlers.show_all import show_all
 from handlers.add_birthday import add_birthday
 from handlers.show_birthday import show_birthday
 from handlers.birthdays import birthdays
+from utils.storage import save_to_file, load_from_file
 
 
 def parse_input(user_input):
@@ -16,7 +15,8 @@ def parse_input(user_input):
 
 
 def main():
-    book = AddressBook()
+    filename = 'address_book.pkl'
+    book = load_from_file(filename)
 
     print("Welcome to the assistant bot!")
     while True:
@@ -48,6 +48,7 @@ def main():
 
         # common
         elif command in ["close", "exit"]:
+            save_to_file(book, filename)
             print("Good bye!")
             break
         elif command == "hello":
