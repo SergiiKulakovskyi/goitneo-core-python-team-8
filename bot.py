@@ -1,3 +1,4 @@
+from classes.address_book import AddressBook
 from handlers.add_contact import add_contact
 from handlers.change_contact import change_contact
 from handlers.show_phone import show_phone
@@ -20,9 +21,11 @@ from handlers.remove_note_tag import remove_note_tag
 
 
 def main():
-    filename = 'address_book.pkl'
-    book = load_from_file(filename)
-    note_book = NoteBook()
+    address_book_filename = 'address_book.pkl'
+    notes_filename = 'notes.pkl'
+
+    book = load_from_file(address_book_filename, AddressBook)
+    note_book = load_from_file(notes_filename, NoteBook)
 
     args_parser = ArgsParser()
 
@@ -73,7 +76,8 @@ def main():
 
         # common
         elif command in ["close", "exit"]:
-            save_to_file(book, filename)
+            save_to_file(book, address_book_filename)
+            save_to_file(note_book, notes_filename)
             print("Good bye!")
             break
         elif command == "hello":
