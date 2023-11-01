@@ -27,9 +27,6 @@ def main():
         args: Namespace = args_parser.parse(user_input)
         command = args.command
 
-        print(f"Command: {command}")
-        print(f"Arguments: {args}")
-        
         # contacts
         if command == "add":
             print(add_contact(args, book))
