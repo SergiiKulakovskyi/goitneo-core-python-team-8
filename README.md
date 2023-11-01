@@ -1,6 +1,9 @@
 # Персональний помічник (CodeCrafters)
 
-## Команди 
+## Команди
+
+### Адресна книга
+
 `add <name> <phone>`
 
 `change <name> <phone>`
@@ -15,11 +18,28 @@
 
 `birthdays`
 
+### Нотатник
+
+`add-note <text>`
+
+`find-notes <id>`
+
+`all-notes`
+
+`edit-note <id> <text>`
+
+`delete-note <id>`
+
+`add-note-tag <id> <tag>`
+
+`remove-note-tag <id> <tag>`
+
+### Загальні
+
 `close`
 
 `exit`
 
 `hello`
-
 
 On close/exit command executed it will save files to data/file_name

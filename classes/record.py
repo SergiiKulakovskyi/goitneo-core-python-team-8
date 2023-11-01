@@ -1,6 +1,6 @@
-from .name import Name
-from .phone import Phone
-from .birthday import Birthday
+from classes.name import Name
+from classes.phone import Phone
+from classes.birthday import Birthday
 
 
 class Record:
