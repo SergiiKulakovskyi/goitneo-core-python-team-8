@@ -4,7 +4,9 @@ from decorators.input_error import input_error
 
 @input_error
 def add_contact(args, book):
-    name, phone = args
+    name = args.name 
+    phone = args.phone
+    
     if name not in book.data:
         record = Record(name)
         record.add_phone(phone)

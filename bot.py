@@ -6,17 +6,15 @@ from handlers.add_birthday import add_birthday
 from handlers.show_birthday import show_birthday
 from handlers.birthdays import birthdays
 from utils.storage import save_to_file, load_from_file
-
-
-def parse_input(user_input):
-    cmd, *args = user_input.split()
-    cmd = cmd.strip().lower()
-    return cmd, *args
+from utils.args_parser import ArgsParser
+from argparse import Namespace
 
 
 def main():
     filename = 'address_book.pkl'
     book = load_from_file(filename)
+
+    args_parser = ArgsParser()
 
     print("Welcome to the assistant bot!")
     while True:
@@ -26,8 +24,12 @@ def main():
             print("Please, enter your command")
             continue
 
-        command, *args = parse_input(user_input)
+        args: Namespace = args_parser.parse(user_input)
+        command = args.command
 
+        print(f"Command: {command}")
+        print(f"Arguments: {args}")
+        
         # contacts
         if command == "add":
             print(add_contact(args, book))
