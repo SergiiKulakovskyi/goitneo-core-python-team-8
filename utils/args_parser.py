@@ -6,7 +6,8 @@ from datetime import datetime, date
 class ArgsParser:
     def __init__(self) -> None:
         self._parser = argparse.ArgumentParser(
-            description="Address Book and Notes bote")
+            description="Address Book and Notes bote", exit_on_error=False)
+        
         subparsers = self._parser.add_subparsers(
             title="Commands", dest="command")
 
@@ -94,7 +95,16 @@ class ArgsParser:
             args = shlex.split(user_input)
             return self._parser.parse_args(args)
         except:
+            if user_input == "-h" or user_input == "--help":
+                return argparse.Namespace(command="help")
+            
             return argparse.Namespace(command=None)
+
+    def get_available_commands(self):
+        subparsers = self._parser._subparsers._group_actions
+        available_commands = [parser.choices.keys() for parser in subparsers if hasattr(parser, 'choices')]
+        return [command for commands in available_commands for command in commands]
+    
 
     @staticmethod
     def __date_parser(date_string: str) -> date:

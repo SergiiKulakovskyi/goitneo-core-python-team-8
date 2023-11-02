@@ -8,6 +8,7 @@ from handlers.show_birthday import show_birthday
 from handlers.birthdays import birthdays
 from utils.storage import save_to_file, load_from_file
 from utils.args_parser import ArgsParser
+from utils.similar_commands_analysis import find_most_similar_command
 from argparse import Namespace
 
 from classes.note_book import NoteBook
@@ -19,7 +20,6 @@ from handlers.delete_note import delete_note
 from handlers.add_note_tag import add_note_tag
 from handlers.remove_note_tag import remove_note_tag
 
-
 def main():
     address_book_filename = 'address_book.pkl'
     notes_filename = 'notes.pkl'
@@ -28,6 +28,7 @@ def main():
     note_book = load_from_file(notes_filename, NoteBook)
 
     args_parser = ArgsParser()
+    available_commands = args_parser.get_available_commands()
 
     print("Welcome to the assistant bot!")
     while True:
@@ -82,9 +83,15 @@ def main():
             break
         elif command == "hello":
             print("How can I help you?")
+        elif command == "help":
+            pass  # it's already handled by argparse
         else:
-            print("Invalid command.")
-
+            similar_command = find_most_similar_command(user_input.split()[0], available_commands)
+            print("Unknown command. See --help for available commands.")
+            
+            if similar_command:
+                print(f"The most similar command is '{similar_command}'")
+                
 
 if __name__ == "__main__":
     main()
