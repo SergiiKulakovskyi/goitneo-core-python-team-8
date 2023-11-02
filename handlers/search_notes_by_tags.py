@@ -1,3 +1,4 @@
+from tabulate import tabulate
 from decorators.note_error import note_error
 
 
@@ -8,9 +9,11 @@ def search_notes_by_tags(args, note_book):
     if (not len(groups)):
         raise ValueError
 
-    result = ''
+    headers = ["ID", "Tag", "Text"]
     for key in sorted(groups):
-        result += f'TAG: {key} \n'
+        print(f'Notes with tag {key}')
+        rows = []
         for note in groups[key]:
-            result += f'  {note} \n'
-    return result
+            rows.append([note.id, ', '.join(note.tags), note.text])
+        print(tabulate(rows, headers=headers, tablefmt="grid"))
+    return 'result'
