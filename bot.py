@@ -19,6 +19,8 @@ from handlers.edit_note import edit_note
 from handlers.delete_note import delete_note
 from handlers.add_note_tag import add_note_tag
 from handlers.remove_note_tag import remove_note_tag
+from handlers.search_notes_by_tags import search_notes_by_tags
+
 
 def main():
     address_book_filename = 'address_book.pkl'
@@ -74,6 +76,8 @@ def main():
             print(add_note_tag(args, note_book))
         elif command == "remove-note-tag":
             print(remove_note_tag(args, note_book))
+        elif command == "search-notes-by-tags":
+            print(search_notes_by_tags(args, note_book))
 
         # common
         elif command in ["close", "exit"]:

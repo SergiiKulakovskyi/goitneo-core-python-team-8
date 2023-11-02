@@ -10,7 +10,7 @@ class Note:
     def __str__(self):
         tags_list = ''
         if len(self.tags) > 0:
-            tags_list = f'(tags: {", ".join(self.tags)})'
+            tags_list = f'(tags: {", ".join(sorted(self.tags))})'
         return f'Note #{self.id}: {self.text} {tags_list}'
 
 
@@ -25,8 +25,9 @@ class NoteBook:
                 largest_numeric_id = note.id
         return largest_numeric_id
 
-    def add_note(self, text):
+    def add_note(self, text, tags=[]):
         note = Note(self.__find_largest_id() + 1, text, [])
+        note.tags = tags
         self.notes.append(note)
         return note.id
 
@@ -54,6 +55,9 @@ class NoteBook:
     def add_note_tag(self, id, tag):
         for note in self.notes:
             if note.id == id:
+                if tag in note.tags:
+                    raise ValueError(
+                        f"Tag '{tag}' already exists for this note")
                 note.tags.append(tag)
                 return
         raise IndexError(f"Note with ID {id} does not exist")
@@ -61,18 +65,26 @@ class NoteBook:
     def remove_note_tag(self, id, tag):
         for note in self.notes:
             if note.id == id:
-                note.tags.remove(tag)
+                try:
+                    note.tags.remove(tag)
+                except:
+                    raise IndexError(
+                        f"Note with ID {id} does not have the specified tag")
                 return
         raise IndexError(f"Note with ID {id} does not exist")
 
-    def find_note_by_tag(self, tag):
-        # TODO
-        raise IndexError(f"Notes with tag {tag} do not exist")
+    def search_by_tags(self, tags):
+        grouped_notes = {}
 
-    def save(self):
-        # TODO
-        pass
+        for note in self.notes:
+            for tag in note.tags:
+                if tag in tags:
+                    if tag not in grouped_notes:
+                        grouped_notes[tag] = []
+                    grouped_notes[tag].append(note)
 
-    def load(self):
-        # TODO
-        pass
+        for tag, notes in grouped_notes.items():
+            notes.sort(key=lambda note: "|".join(sorted(note.tags)))
+            notes.sort(key=lambda note: len(note.tags), reverse=True)
+
+        return grouped_notes

@@ -7,7 +7,7 @@ class ArgsParser:
     def __init__(self) -> None:
         self._parser = argparse.ArgumentParser(
             description="Address Book and Notes bote", exit_on_error=False)
-        
+
         subparsers = self._parser.add_subparsers(
             title="Commands", dest="command")
 
@@ -89,6 +89,12 @@ class ArgsParser:
             "id", type=int, help="The ID of the note to remove the tag from.")
         remove_note_tag_parser.add_argument(
             "tag", type=str, help="The tag to remove from the note.")
+
+        # search-notes-by-tags
+        search_notes_by_tags_parser = subparsers.add_parser(
+            "search-notes-by-tags", help="Search notes by tags.")
+        search_notes_by_tags_parser.add_argument(
+            "tags", nargs='+', help="The tags to search for.")
 
     def parse(self, user_input):
         try:
