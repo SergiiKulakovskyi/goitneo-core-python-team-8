@@ -1,6 +1,6 @@
-def birthdays(book):
-    upcoming_birthdays = book.get_birthdays_per_week()
-    if upcoming_birthdays:
-        return upcoming_birthdays
-    else:
-        return "No upcoming birthdays in the next week."
+def birthdays(days, book):
+    try:
+        upcoming_birthdays = book.get_birthdays_in_next_days(days)
+        return upcoming_birthdays if upcoming_birthdays else "No upcoming birthdays."
+    except ValueError as e:
+        return str(e)

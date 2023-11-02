@@ -26,10 +26,12 @@ class AddressBook(UserDict):
         if name in self.data:
             del self.data[name]
 
-    def get_birthdays_per_week(self):
+    def get_birthdays_in_next_days(self, days):
+        if days < 1 or days > 180:
+            raise ValueError("Days must be within 1 to 180.")
+
         birthday_dict = defaultdict(list)
         today = datetime.today().date()
-        current_weekday = today.weekday()
 
         for record in self.data.values():
             name = record.name.value
@@ -42,15 +44,11 @@ class AddressBook(UserDict):
                 birthday_this_year = birthday.replace(year=today.year + 1)
 
             delta_days = (birthday_this_year - today).days
-            birthday_weekday = birthday_this_year.weekday()
-            if birthday_weekday in [5, 6]:
-                delta_days += 7 - birthday_weekday
 
-            if delta_days < 7:
-                greeting_weekday = (current_weekday + delta_days) % 7
-                birthday_dict[weekday_names[greeting_weekday]].append(name)
+            if 0 <= delta_days <= days:
+                birthday_dict[birthday_this_year.strftime("%A")].append(name)
 
         result = ''
-        for day, names in birthday_dict.items():
+        for day, names in sorted(birthday_dict.items()):
             result += f"{day}: {', '.join(names)}\n"
-        return result
+        return result.strip()
