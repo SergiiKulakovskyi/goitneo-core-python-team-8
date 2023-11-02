@@ -34,6 +34,8 @@
 
 `remove-note-tag <id> <tag>`
 
+`search-notes-by-tags <multiple tags separated by space>`
+
 ### Загальні
 
 `close`
