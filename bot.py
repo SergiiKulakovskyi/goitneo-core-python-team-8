@@ -4,6 +4,7 @@ from handlers.add_contact import add_contact
 from handlers.change_contact import change_contact
 from handlers.show_phone import show_phone
 from handlers.show_all import show_all
+from handlers.search_contacts import search_contacts
 from handlers.add_email import add_email
 from handlers.remove_email import remove_email
 from handlers.add_address import add_address
@@ -26,13 +27,15 @@ from handlers.add_note_tag import add_note_tag
 from handlers.remove_note_tag import remove_note_tag
 from handlers.search_notes_by_tags import search_notes_by_tags
 
+import argparse
+
 def main():
     address_book_filename = 'address_book.pkl'
     notes_filename = 'notes.pkl'
 
     book = load_from_file(address_book_filename, AddressBook)
     note_book = load_from_file(notes_filename, NoteBook)
-
+        
     args_parser = ArgsParser()
     available_commands = args_parser.get_available_commands()
 
@@ -44,8 +47,27 @@ def main():
             print("Please, enter your command")
             continue
 
-        args: Namespace = args_parser.parse(user_input)
-        command = args.command
+        try:
+            args: Namespace = args_parser.parse(user_input)
+            command = args.command
+        except SystemExit as e:
+            # argparse raises SystemExit when help is requested (-h or --help)
+            continue
+        except argparse.ArgumentError as e:
+            if e.argument_name == "command":
+                similar_command = find_most_similar_command(user_input.split()[0], available_commands)
+                print("Unknown command. See --help for available commands.")
+                
+                if similar_command:
+                    print(f"The most similar command is '{similar_command}'")
+
+                continue
+            else:
+                # Invalid arguments passed to command. arparse displays error message 
+                continue
+        except BaseException as e:
+            # Unknown scenario
+            raise e
 
         # contacts
         if command == "add":
@@ -56,8 +78,8 @@ def main():
             print(show_phone(args, book))
         elif command == "all":
             print(show_all(book))
-        elif command == "":
-            print(change_contact(args, book))
+        elif command == "search-contacts":
+            print(search_contacts(args, book))
         
         
         # email
@@ -108,15 +130,9 @@ def main():
             break
         elif command == "hello":
             print("How can I help you?")
-        elif command == "help":
-            pass  # it's already handled by argparse
         else:
-            similar_command = find_most_similar_command(user_input.split()[0], available_commands)
-            print("Unknown command. See --help for available commands.")
-            
-            if similar_command:
-                print(f"The most similar command is '{similar_command}'")
-                
+            # Unknown scenario
+            pass
 
 if __name__ == "__main__":
     main()

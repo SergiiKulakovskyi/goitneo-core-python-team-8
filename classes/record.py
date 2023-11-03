@@ -52,4 +52,4 @@ class Record:
         email_str = f', email: {self.email.value}' if self.email else ''
         address_str = f', address: {self.address.value}' if self.address else ''
         birthday_str = f', birthday: {self.birthday.value}' if self.birthday else ''
-        return f"Contact name: {self.name.value}, {phone_str}{email_str}{address_str}{birthday_str}"
+        return f"Contact name: {self.name.value}{phone_str}{email_str}{address_str}{birthday_str}"

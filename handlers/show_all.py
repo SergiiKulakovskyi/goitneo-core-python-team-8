@@ -1,9 +1,6 @@
 from decorators.input_error import input_error
-
+from utils.representation import display_contacts
 
 @input_error
 def show_all(book):
-    contacts = []
-    for record in book.data.values():
-        contacts.append(str(record))
-    return "\n".join(contacts)
+    return display_contacts(book.data.values())

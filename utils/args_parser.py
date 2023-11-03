@@ -1,6 +1,5 @@
 import shlex
 import argparse
-from datetime import datetime, date
 
 
 class ArgsParser:
@@ -36,6 +35,14 @@ class ArgsParser:
             "-e", "--email", type=str, help="New contact email")
         change_contact_parser.add_argument(
             "-b", "--birthday", type=str, help="New contact birthday in format DD.MM.YYYY")
+
+        search_contacts_parser = subparsers.add_parser(
+            "search-contacts", help="Search for contacts in address book by specific criteria")
+
+        search_contacts_parser.add_argument("-c", "--criteria", type=str, nargs='?', default="name", choices=[
+                                            "name", "phone", "address", "email", "birthday"], help="The criteria to search by")
+        search_contacts_parser.add_argument(
+            "text", type=ArgsParser._search_text_length, help="The text to search for")
 
         subparsers.add_parser(
             "all", help="Show all existing contacts in address book")
@@ -102,17 +109,17 @@ class ArgsParser:
             "tags", nargs='+', help="The tags to search for.")
 
     def parse(self, user_input):
-        try:
-            args = shlex.split(user_input)
-            return self._parser.parse_args(args)
-        except:
-            if user_input == "-h" or user_input == "--help":
-                return argparse.Namespace(command="help")
-
-            return argparse.Namespace(command=None)
+        args = shlex.split(user_input)
+        return self._parser.parse_args(args)
 
     def get_available_commands(self):
         subparsers = self._parser._subparsers._group_actions
-        available_commands = [parser.choices.keys() for parser in subparsers if hasattr(parser, 'choices')]
+        available_commands = [parser.choices.keys()
+                              for parser in subparsers if hasattr(parser, 'choices')]
         return [command for commands in available_commands for command in commands]
-    
+
+    @staticmethod
+    def _search_text_length(value):
+        if len(value) < 2:
+            raise argparse.ArgumentTypeError("The 'text' argument must be at least 2 characters long.")
+        return value
