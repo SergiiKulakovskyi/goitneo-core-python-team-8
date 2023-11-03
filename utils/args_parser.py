@@ -39,11 +39,16 @@ class ArgsParser:
 
         subparsers.add_parser(
             "all", help="Show all existing contacts in address book")
-        subparsers.add_parser(
-            "birthdays", help="Show all contacts with birthdays in next 7 days")
         subparsers.add_parser("close", help="Close the bot")
         subparsers.add_parser("exit", help="Close the bot")
         subparsers.add_parser("hello", help="Show greeting message")
+
+        # birthdays
+        birthdays_parser = subparsers.add_parser(
+            "birthdays", help="Show all contacts with birthdays in a specified number of days (1 - 180)")
+        birthdays_parser.add_argument(
+            "days", type=int, nargs='?', default=7,
+            help="Number of days from today to check for upcoming birthdays")
 
         # add-note
         add_note_parser = subparsers.add_parser(
@@ -103,7 +108,7 @@ class ArgsParser:
         except:
             if user_input == "-h" or user_input == "--help":
                 return argparse.Namespace(command="help")
-            
+
             return argparse.Namespace(command=None)
 
     def get_available_commands(self):

@@ -1,3 +1,4 @@
+import pickle
 from classes.address_book import AddressBook
 from handlers.add_contact import add_contact
 from handlers.change_contact import change_contact
@@ -24,7 +25,6 @@ from handlers.delete_note import delete_note
 from handlers.add_note_tag import add_note_tag
 from handlers.remove_note_tag import remove_note_tag
 from handlers.search_notes_by_tags import search_notes_by_tags
-
 
 def main():
     address_book_filename = 'address_book.pkl'
@@ -80,7 +80,7 @@ def main():
         elif command == "show-birthday":
             print(show_birthday(args, book))
         elif command == "birthdays":
-            print(birthdays(book))
+            print(birthdays(args.days, book))
 
         # notes
         elif command == "add-note":

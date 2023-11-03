@@ -1,5 +1,7 @@
 from classes.name import Name
 from classes.phone import Phone
+from classes.email import Email
+from classes.address import Address
 from classes.birthday import Birthday
 from classes.address import Address
 from classes.email import Email
@@ -7,10 +9,11 @@ from classes.email import Email
 class Record:
     def __init__(self, name):
         self.name = Name(name)
-        self.phones = None         # Змінив зі списку на 1 параметр
-        self.birthday = None
-        self.address = None
+        self.phones = []
         self.email = None
+        self.address = None
+        self.birthday = None
+
         
 
     # phone
@@ -45,5 +48,8 @@ class Record:
         self.birthday = Birthday(birthday)
 
     def __str__(self):
-        return f"Contact name: {self.name.value}, phone: {self.phone}, email: {self.email}, \
-              birthday: {self.birthday}, address: {self.address}"
+        phones_str = '; '.join(phone.value for phone in self.phones)
+        email_str = f', email: {self.email.value}' if self.email else ''
+        address_str = f', address: {self.address.value}' if self.address else ''
+        birthday_str = f', birthday: {self.birthday.value}' if self.birthday else ''
+        return f"Contact name: {self.name.value}, phones: {phones_str}{email_str}{address_str}{birthday_str}"
