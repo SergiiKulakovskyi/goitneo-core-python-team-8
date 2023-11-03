@@ -11,10 +11,16 @@ def change_contact(args, book):
 
     if name in book.data:
         record = book.find(name)
-        record.edit_phone(new_phone)
-        record.add_email(email)
-        record.add_birthday(birthday)
-        record.add_address(address)
+
+        if new_phone is not None:
+            record.edit_phone(new_phone)
+        if email is not None:
+            record.add_email(email)
+        if birthday is not None:
+            record.add_birthday(birthday)
+        if address is not None:
+            record.add_address(address)
+
         return "Contact updated."
     else:
         return "Contact not found."
