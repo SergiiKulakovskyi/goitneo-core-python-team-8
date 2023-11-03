@@ -72,8 +72,10 @@ def main():
         # contacts
         if command == "add":
             print(add_contact(args, book))
+            save_to_file(book, address_book_filename)
         elif command == "change":
             print(change_contact(args, book))
+            save_to_file(book, address_book_filename)
         elif command == "phone":
             print(show_phone(args, book))
         elif command == "all":
@@ -85,20 +87,25 @@ def main():
         # email
         elif command == "add-email":
             print(add_email(args, book))
+            save_to_file(book, address_book_filename)
         elif command == "delete-email":
             print(remove_email(args, book))
+            save_to_file(book, address_book_filename)
 
         
         # address
         elif command == "add-address":
             print(add_address(args, book))
+            save_to_file(book, address_book_filename)
         elif command == "delete-address":
             print(remove_address(args, book))
+            save_to_file(book, address_book_filename)
 
 
         # birthdays
         elif command == "add-birthday":
             print(add_birthday(args, book))
+            save_to_file(book, address_book_filename)
         elif command == "show-birthday":
             print(show_birthday(args, book))
         elif command == "birthdays":
@@ -107,18 +114,23 @@ def main():
         # notes
         elif command == "add-note":
             print(add_note(args, note_book))
+            save_to_file(note_book, notes_filename)
         elif command == "find-notes":
             print(find_notes(args, note_book))
         elif command == "all-notes":
             print(all_notes(note_book))
         elif command == "edit-note":
             print(edit_note(args, note_book))
+            save_to_file(note_book, notes_filename)
         elif command == "delete-note":
             print(delete_note(args, note_book))
+            save_to_file(note_book, notes_filename)
         elif command == "add-note-tag":
             print(add_note_tag(args, note_book))
+            save_to_file(note_book, notes_filename)
         elif command == "remove-note-tag":
             print(remove_note_tag(args, note_book))
+            save_to_file(note_book, notes_filename)
         elif command == "search-notes-by-tags":
             print(search_notes_by_tags(args, note_book))
 
