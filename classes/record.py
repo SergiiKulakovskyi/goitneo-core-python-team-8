@@ -1,41 +1,49 @@
 from classes.name import Name
 from classes.phone import Phone
 from classes.birthday import Birthday
-
+from classes.address import Address
+from classes.email import Email
 
 class Record:
     def __init__(self, name):
         self.name = Name(name)
-        self.phones = []
+        self.phones = None         # Змінив зі списку на 1 параметр
         self.birthday = None
+        self.address = None
+        self.email = None
+        
 
-    def add_phone(self, phone_number):
-        phone = Phone(phone_number)
-        self.phones.append(phone)
+    # phone
+    def add_phone(self, phone_number):      # Прибрав список
+        self.phone = Phone(phone_number)
 
-    def remove_phone(self, phone_number):
-        for phone in self.phones:
-            if phone.value == phone_number:
-                self.phones.remove(phone)
-                return
-        raise ValueError("Phone number not found")
+    def remove_phone(self):       # Прибрав список
+        self.phone = None
 
-    def edit_phone(self, old_phone_number, new_phone_number):
-        for phone in self.phones:
-            if phone.value == old_phone_number:
-                phone.value = new_phone_number
-                return
-        raise ValueError("Phone number not found")
+    def edit_phone(self, old_phone_number, new_phone_number):   # Прибрав список
+        self.phone = new_phone_number            
+    
+    
+    # email
+    def add_email(self, email):
+        self.email = Email(email)
+    
+    def remove_email(self, email):
+        self.email = None
 
-    def find_phone(self, phone_number):
-        for phone in self.phones:
-            if phone.value == phone_number:
-                return phone
-        raise ValueError("Phone number not found")
 
+    # address
+    def add_address(self, address):
+        self.address = Address(address)
+    
+    def remove_address(self):
+        self.address = None
+
+
+    # birthday
     def add_birthday(self, birthday):
         self.birthday = Birthday(birthday)
 
     def __str__(self):
-        phones_str = '; '.join(phone.value for phone in self.phones)
-        return f"Contact name: {self.name.value}, phones: {phones_str}, birthday: {self.birthday}"
+        return f"Contact name: {self.name.value}, phone: {self.phone}, email: {self.email}, \
+              birthday: {self.birthday}, address: {self.address}"
