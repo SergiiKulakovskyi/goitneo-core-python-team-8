@@ -1,7 +1,7 @@
-from decorators.note_error import note_error
+from decorators.input_error import input_error
 
 
-@note_error(message='You must enter the ID of the note and the text to edit it')
+@input_error(message='You must enter the ID of the note and the text to edit it')
 def edit_note(args, note_book):
     try:
         id = int(getattr(args, "id"))

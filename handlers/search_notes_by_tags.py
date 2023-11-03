@@ -1,19 +1,21 @@
 from tabulate import tabulate
-from decorators.note_error import note_error
+from decorators.input_error import input_error
 
 
-@note_error(message='No notes found with the specified tags')
+@input_error()
 def search_notes_by_tags(args, note_book):
     groups = note_book.search_by_tags(getattr(args, "tags"))
 
     if (not len(groups)):
-        raise ValueError
+        raise ValueError('No notes found with the specified tags')
+
+    result = ''
 
     headers = ["ID", "Tag", "Text"]
     for key in sorted(groups):
-        print(f'Notes with tag {key}')
+        result += f'\nNotes with tag "{key}" \n'
         rows = []
         for note in groups[key]:
             rows.append([note.id, ', '.join(note.tags), note.text])
-        print(tabulate(rows, headers=headers, tablefmt="grid"))
-    return 'result'
+        result += tabulate(rows, headers=headers, tablefmt="grid") + '\n'
+    return result

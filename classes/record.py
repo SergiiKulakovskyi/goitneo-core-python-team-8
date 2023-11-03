@@ -6,6 +6,7 @@ from classes.birthday import Birthday
 from classes.address import Address
 from classes.email import Email
 
+
 class Record:
     def __init__(self, name):
         self.name = Name(name)
@@ -14,38 +15,37 @@ class Record:
         self.address = None
         self.birthday = None
 
-        
-
     # phone
-    def add_phone(self, phone_number):      # Прибрав список
+
+    def add_phone(self, phone_number):
         self.phone = Phone(phone_number)
 
-    def remove_phone(self):       # Прибрав список
+    def remove_phone(self):
         self.phone = None
 
-    def edit_phone(self, new_phone_number):   # Прибрав список
-        self.phone = new_phone_number            
-    
-    
     # email
+
     def add_email(self, email):
         self.email = Email(email)
-    
+
     def remove_email(self):
         self.email = None
 
-
     # address
+
     def add_address(self, address):
         self.address = Address(address)
-    
+
     def remove_address(self):
         self.address = None
 
-
     # birthday
+
     def add_birthday(self, birthday):
         self.birthday = Birthday(birthday)
+
+    def remove_birthday(self):
+        self.birthday = None
 
     def __str__(self):
         phone_str = f', phone: {self.phone.value}' if self.phone else ''

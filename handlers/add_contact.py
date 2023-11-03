@@ -2,7 +2,7 @@ from classes.record import Record
 from decorators.input_error import input_error
 
 
-@input_error
+@input_error()
 def add_contact(args, book):
     name = args.name
     phone = args.phone

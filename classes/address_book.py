@@ -22,22 +22,19 @@ class AddressBook(UserDict):
             return self.data[name]
         else:
             raise ValueError("Contact not found")
-        
+
     def delete(self, name):
         if name in self.data:
             del self.data[name]
         else:
             raise ValueError("Contact not found")
-    
-    
-
 
     def get_birthdays_in_next_days(self, days):
         if days < 1 or days > 365:
             raise ValueError("Days must be within 1 to 365.")
 
         birthday_dict = defaultdict(list)
-        today = datetime.today().date()
+        today = datetime.today()
 
         for record in self.data.values():
             name = record.name.value
@@ -45,7 +42,6 @@ class AddressBook(UserDict):
                 continue
             birthday_date = record.birthday.value
             birthday_this_year = birthday_date.replace(year=today.year)
-
             if birthday_this_year < today:
                 birthday_this_year = birthday_date.replace(year=today.year + 1)
 

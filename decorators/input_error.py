@@ -1,10 +1,11 @@
-def input_error(func):
-    def inner(*args, **kwargs):
-        try:
-            return func(*args, **kwargs)
-        except ValueError:
-            return "Give me name and phone(10 digits) please."
-        except IndexError:
-            return "Give me name please."
+def input_error(message=None):
+    def decorator(func):
+        def inner(*args, **kwargs):
+            try:
+                return func(*args, **kwargs)
+            except Exception as e:
+                return e or message or "Unknown error occurred during data processing"
 
-    return inner
+        return inner
+
+    return decorator

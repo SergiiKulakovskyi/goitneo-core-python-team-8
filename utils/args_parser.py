@@ -36,6 +36,13 @@ class ArgsParser:
         change_contact_parser.add_argument(
             "-b", "--birthday", type=str, help="New contact birthday in format DD.MM.YYYY")
 
+        delete_contact_parser = subparsers.add_parser(
+            "delete", help="Delete existing contact from address book")
+        delete_contact_parser.add_argument(
+            "-n", "--name", type=str, help="Contact name", required=True)
+        delete_contact_parser.add_argument("-f", "--fields", type=str, nargs='+', choices=[
+            "phone", "address", "email", "birthday"], help="Delete a contact from the address book or delete specific fields from a contact")
+
         search_contacts_parser = subparsers.add_parser(
             "search-contacts", help="Search for contacts in address book by specific criteria")
 
@@ -52,7 +59,7 @@ class ArgsParser:
 
         # birthdays
         birthdays_parser = subparsers.add_parser(
-            "birthdays", help="Show all contacts with birthdays in a specified number of days (1 - 180)")
+            "birthdays", help="Show all contacts with birthdays in a specified number of days (1 - 365)")
         birthdays_parser.add_argument(
             "days", type=int, nargs='?', default=7,
             help="Number of days from today to check for upcoming birthdays")
@@ -121,5 +128,14 @@ class ArgsParser:
     @staticmethod
     def _search_text_length(value):
         if len(value) < 2:
-            raise argparse.ArgumentTypeError("The 'text' argument must be at least 2 characters long.")
+            raise argparse.ArgumentTypeError(
+                "The 'text' argument must be at least 2 characters long.")
         return value
+
+
+def count_non_empty_args(args):
+    count = -1
+    for key, value in args.__dict__.items():
+        if value is not None:
+            count += 1
+    return count

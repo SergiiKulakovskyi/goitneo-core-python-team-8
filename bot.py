@@ -1,16 +1,9 @@
-import pickle
 from classes.address_book import AddressBook
 from handlers.add_contact import add_contact
 from handlers.change_contact import change_contact
-from handlers.show_phone import show_phone
+from handlers.delete_contact import delete_contact
 from handlers.show_all import show_all
 from handlers.search_contacts import search_contacts
-from handlers.add_email import add_email
-from handlers.remove_email import remove_email
-from handlers.add_address import add_address
-from handlers.remove_address import remove_address
-from handlers.add_birthday import add_birthday
-from handlers.show_birthday import show_birthday
 from handlers.birthdays import birthdays
 from utils.storage import save_to_file, load_from_file
 from utils.args_parser import ArgsParser
@@ -29,13 +22,14 @@ from handlers.search_notes_by_tags import search_notes_by_tags
 
 import argparse
 
+
 def main():
     address_book_filename = 'address_book.pkl'
     notes_filename = 'notes.pkl'
 
     book = load_from_file(address_book_filename, AddressBook)
     note_book = load_from_file(notes_filename, NoteBook)
-        
+
     args_parser = ArgsParser()
     available_commands = args_parser.get_available_commands()
 
@@ -55,15 +49,16 @@ def main():
             continue
         except argparse.ArgumentError as e:
             if e.argument_name == "command":
-                similar_command = find_most_similar_command(user_input.split()[0], available_commands)
+                similar_command = find_most_similar_command(
+                    user_input.split()[0], available_commands)
                 print("Unknown command. See --help for available commands.")
-                
+
                 if similar_command:
                     print(f"The most similar command is '{similar_command}'")
 
                 continue
             else:
-                # Invalid arguments passed to command. arparse displays error message 
+                # Invalid arguments passed to command. arparse displays error message
                 continue
         except BaseException as e:
             # Unknown scenario
@@ -76,38 +71,12 @@ def main():
         elif command == "change":
             print(change_contact(args, book))
             save_to_file(book, address_book_filename)
-        elif command == "phone":
-            print(show_phone(args, book))
         elif command == "all":
             print(show_all(book))
         elif command == "search-contacts":
             print(search_contacts(args, book))
-        
-        
-        # email
-        elif command == "add-email":
-            print(add_email(args, book))
-            save_to_file(book, address_book_filename)
-        elif command == "delete-email":
-            print(remove_email(args, book))
-            save_to_file(book, address_book_filename)
-
-        
-        # address
-        elif command == "add-address":
-            print(add_address(args, book))
-            save_to_file(book, address_book_filename)
-        elif command == "delete-address":
-            print(remove_address(args, book))
-            save_to_file(book, address_book_filename)
-
-
-        # birthdays
-        elif command == "add-birthday":
-            print(add_birthday(args, book))
-            save_to_file(book, address_book_filename)
-        elif command == "show-birthday":
-            print(show_birthday(args, book))
+        elif command == "delete":
+            print(delete_contact(args, book))
         elif command == "birthdays":
             print(birthdays(args.days, book))
 
@@ -145,6 +114,7 @@ def main():
         else:
             # Unknown scenario
             pass
+
 
 if __name__ == "__main__":
     main()

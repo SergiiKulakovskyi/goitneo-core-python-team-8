@@ -1,7 +1,7 @@
-from decorators.note_error import note_error
+from decorators.input_error import input_error
 
 
-@note_error(message='You must enter the ID of the note and the tag name to remove it')
+@input_error(message='You must enter the ID of the note and the tag name to remove it')
 def remove_note_tag(args, note_book):
     try:
         id = int(getattr(args, "id"))

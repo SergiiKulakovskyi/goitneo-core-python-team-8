@@ -1,7 +1,7 @@
-from decorators.note_error import note_error
+from decorators.input_error import input_error
 
 
-@note_error(message='Type at least two characters to search the note')
+@input_error(message='Type at least two characters to search the note')
 def find_notes(args, note_book):
     try:
         search_text = getattr(args, "text").strip()

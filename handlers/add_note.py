@@ -1,7 +1,7 @@
-from decorators.note_error import note_error
+from decorators.input_error import input_error
 
 
-@note_error(message='You must enter text for a note')
+@input_error(message='You must enter text for a note')
 def add_note(args, note_book):
     try:
         text = getattr(args, "text").strip()
