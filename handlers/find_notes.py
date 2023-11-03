@@ -1,4 +1,5 @@
 from decorators.input_error import input_error
+from utils.representation import display_notes
 
 
 @input_error(message='Type at least two characters to search the note')
@@ -8,14 +9,7 @@ def find_notes(args, note_book):
         if (len(search_text) >= 2):
             notes = note_book.find_notes(search_text)
 
-            result = []
-            for note in notes:
-                result.append(str(note))
-
-            if len(result) == 0:
-                return 'No notes were found'
-
-            return '\n'.join(result)
+            return display_notes(notes)
         raise
     except:
         raise ValueError
