@@ -19,6 +19,10 @@ python bot.py
 
 The bot saves and loads data to and from local files. This means that you can keep your data even after you close the bot. When you start the bot, it will automatically load the data.
 
+#### Auto-Suggestion Feature
+
+The bot has an auto-suggestion feature that can help you when you mistype a command. If you enter an incorrect or misspelled command, the bot will suggest the closest valid command using the Levenshtein distance method. This can be handy if you are not sure about the exact command syntax.
+
 ## Available commands:
 
 #### Address book commands
