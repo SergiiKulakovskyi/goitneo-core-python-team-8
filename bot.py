@@ -4,6 +4,10 @@ from handlers.add_contact import add_contact
 from handlers.change_contact import change_contact
 from handlers.show_phone import show_phone
 from handlers.show_all import show_all
+from handlers.add_email import add_email
+from handlers.remove_email import remove_email
+from handlers.add_address import add_address
+from handlers.remove_address import remove_address
 from handlers.add_birthday import add_birthday
 from handlers.show_birthday import show_birthday
 from handlers.birthdays import birthdays
@@ -52,6 +56,23 @@ def main():
             print(show_phone(args, book))
         elif command == "all":
             print(show_all(book))
+        elif command == "":
+            print(change_contact(args, book))
+        
+        
+        # email
+        elif command == "add-email":
+            print(add_email(args, book))
+        elif command == "delete-email":
+            print(remove_email(args, book))
+
+        
+        # address
+        elif command == "add-address":
+            print(add_address(args, book))
+        elif command == "delete-address":
+            print(remove_address(args, book))
+
 
         # birthdays
         elif command == "add-birthday":

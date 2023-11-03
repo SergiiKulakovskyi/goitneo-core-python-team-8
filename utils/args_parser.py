@@ -22,7 +22,7 @@ class ArgsParser:
         add_contact_parser.add_argument(
             "-e", "--email", type=str, help="Contact email")
         add_contact_parser.add_argument(
-            "-b", "--birthday", type=ArgsParser.__date_parser, help="Contact birthday in format DD.MM.YYYY")
+            "-b", "--birthday", type=str, help="Contact birthday in format DD.MM.YYYY")
 
         change_contact_parser = subparsers.add_parser(
             "change", help="Change existing contact in address book")
@@ -35,7 +35,7 @@ class ArgsParser:
         change_contact_parser.add_argument(
             "-e", "--email", type=str, help="New contact email")
         change_contact_parser.add_argument(
-            "-b", "--birthday", type=ArgsParser.__date_parser, help="New contact birthday in format DD.MM.YYYY")
+            "-b", "--birthday", type=str, help="New contact birthday in format DD.MM.YYYY")
 
         subparsers.add_parser(
             "all", help="Show all existing contacts in address book")
@@ -115,7 +115,4 @@ class ArgsParser:
         subparsers = self._parser._subparsers._group_actions
         available_commands = [parser.choices.keys() for parser in subparsers if hasattr(parser, 'choices')]
         return [command for commands in available_commands for command in commands]
-
-    @staticmethod
-    def __date_parser(date_string: str) -> date:
-        return datetime.strptime(date_string, "%d.%m.%Y").date()
+    

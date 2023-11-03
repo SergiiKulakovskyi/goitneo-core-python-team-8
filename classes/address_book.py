@@ -20,11 +20,17 @@ class AddressBook(UserDict):
     def find(self, name):
         if name in self.data:
             return self.data[name]
-        return None
-
+        else:
+            raise ValueError("Contact not found")
+        
     def delete(self, name):
         if name in self.data:
             del self.data[name]
+        else:
+            raise ValueError("Contact not found")
+    
+    
+
 
     def get_birthdays_in_next_days(self, days):
         if days < 1 or days > 365:
