@@ -20,37 +20,38 @@ class AddressBook(UserDict):
     def find(self, name):
         if name in self.data:
             return self.data[name]
-        return None
+        else:
+            raise ValueError("Contact not found")
 
     def delete(self, name):
         if name in self.data:
             del self.data[name]
+        else:
+            raise ValueError("Contact not found")
 
-    def get_birthdays_per_week(self):
+    def get_birthdays_in_next_days(self, days):
+        if days < 1 or days > 365:
+            raise ValueError("Days must be within 1 to 365.")
+
         birthday_dict = defaultdict(list)
-        today = datetime.today().date()
-        current_weekday = today.weekday()
+        today = datetime.today()
 
         for record in self.data.values():
             name = record.name.value
-            if record.birthday.value is None:
+            if record.birthday is None:
                 continue
-            birthday = record.birthday.value.date()
-            birthday_this_year = birthday.replace(year=today.year)
-
+            birthday_date = record.birthday.value
+            birthday_this_year = birthday_date.replace(year=today.year)
             if birthday_this_year < today:
-                birthday_this_year = birthday.replace(year=today.year + 1)
+                birthday_this_year = birthday_date.replace(year=today.year + 1)
 
-            delta_days = (birthday_this_year - today).days
-            birthday_weekday = birthday_this_year.weekday()
-            if birthday_weekday in [5, 6]:
-                delta_days += 7 - birthday_weekday
-
-            if delta_days < 7:
-                greeting_weekday = (current_weekday + delta_days) % 7
-                birthday_dict[weekday_names[greeting_weekday]].append(name)
+            days_until_birthday = (birthday_this_year - today).days
+            if 0 <= days_until_birthday <= days:
+                birthday_dict[birthday_this_year].append(name)
 
         result = ''
-        for day, names in birthday_dict.items():
-            result += f"{day}: {', '.join(names)}\n"
-        return result
+        for birthday, names in sorted(birthday_dict.items()):
+            day_string = birthday.strftime("%Y-%m-%d %A")
+            result += f"{day_string}: {', '.join(names)}\n"
+
+        return result.strip() if result else "No upcoming birthdays."
