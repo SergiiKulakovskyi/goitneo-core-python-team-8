@@ -9,7 +9,7 @@ from classes.email import Email
 class Record:
     def __init__(self, name):
         self.name = Name(name)
-        self.phones = []
+        self.phone = None
         self.email = None
         self.address = None
         self.birthday = None
@@ -23,7 +23,7 @@ class Record:
     def remove_phone(self):       # Прибрав список
         self.phone = None
 
-    def edit_phone(self, old_phone_number, new_phone_number):   # Прибрав список
+    def edit_phone(self, new_phone_number):   # Прибрав список
         self.phone = new_phone_number            
     
     
@@ -31,7 +31,7 @@ class Record:
     def add_email(self, email):
         self.email = Email(email)
     
-    def remove_email(self, email):
+    def remove_email(self):
         self.email = None
 
 
@@ -48,8 +48,8 @@ class Record:
         self.birthday = Birthday(birthday)
 
     def __str__(self):
-        phones_str = '; '.join(phone.value for phone in self.phones)
+        phone_str = f', phone: {self.phone.value}' if self.phone else ''
         email_str = f', email: {self.email.value}' if self.email else ''
         address_str = f', address: {self.address.value}' if self.address else ''
         birthday_str = f', birthday: {self.birthday.value}' if self.birthday else ''
-        return f"Contact name: {self.name.value}, phones: {phones_str}{email_str}{address_str}{birthday_str}"
+        return f"Contact name: {self.name.value}, {phone_str}{email_str}{address_str}{birthday_str}"
