@@ -27,8 +27,8 @@ class AddressBook(UserDict):
             del self.data[name]
 
     def get_birthdays_in_next_days(self, days):
-        if days < 1 or days > 180:
-            raise ValueError("Days must be within 1 to 180.")
+        if days < 1 or days > 365:
+            raise ValueError("Days must be within 1 to 365.")
 
         birthday_dict = defaultdict(list)
         today = datetime.today().date()
@@ -37,18 +37,19 @@ class AddressBook(UserDict):
             name = record.name.value
             if record.birthday is None:
                 continue
-            birthday = record.birthday.value.date()
-            birthday_this_year = birthday.replace(year=today.year)
+            birthday_date = record.birthday.value
+            birthday_this_year = birthday_date.replace(year=today.year)
 
             if birthday_this_year < today:
-                birthday_this_year = birthday.replace(year=today.year + 1)
+                birthday_this_year = birthday_date.replace(year=today.year + 1)
 
-            delta_days = (birthday_this_year - today).days
-
-            if 0 <= delta_days <= days:
-                birthday_dict[birthday_this_year.strftime("%A")].append(name)
+            days_until_birthday = (birthday_this_year - today).days
+            if 0 <= days_until_birthday <= days:
+                birthday_dict[birthday_this_year].append(name)
 
         result = ''
-        for day, names in sorted(birthday_dict.items()):
-            result += f"{day}: {', '.join(names)}\n"
-        return result.strip()
+        for birthday, names in sorted(birthday_dict.items()):
+            day_string = birthday.strftime("%Y-%m-%d %A")
+            result += f"{day_string}: {', '.join(names)}\n"
+
+        return result.strip() if result else "No upcoming birthdays."

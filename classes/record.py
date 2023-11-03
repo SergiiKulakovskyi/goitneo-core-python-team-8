@@ -1,5 +1,7 @@
 from classes.name import Name
 from classes.phone import Phone
+from classes.email import Email
+from classes.address import Address
 from classes.birthday import Birthday
 
 
@@ -7,6 +9,8 @@ class Record:
     def __init__(self, name):
         self.name = Name(name)
         self.phones = []
+        self.email = None
+        self.address = None
         self.birthday = None
 
     def add_phone(self, phone_number):
@@ -33,9 +37,18 @@ class Record:
                 return phone
         raise ValueError("Phone number not found")
 
+    def add_email(self, email):
+        self.email = Email(email)
+
+    def add_address(self, address):
+        self.address = Address(address)
+
     def add_birthday(self, birthday):
         self.birthday = Birthday(birthday)
 
     def __str__(self):
         phones_str = '; '.join(phone.value for phone in self.phones)
-        return f"Contact name: {self.name.value}, phones: {phones_str}, birthday: {self.birthday}"
+        email_str = f', email: {self.email.value}' if self.email else ''
+        address_str = f', address: {self.address.value}' if self.address else ''
+        birthday_str = f', birthday: {self.birthday.value}' if self.birthday else ''
+        return f"Contact name: {self.name.value}, phones: {phones_str}{email_str}{address_str}{birthday_str}"
