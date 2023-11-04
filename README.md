@@ -2,12 +2,15 @@
 
 This is an address book and notes bot written in Python. It allows you to add, edit, delete, and search for contacts and notes. You can also use it to view a list of upcoming birthdays.
 
-#### Before running the bot, you need to install the following Python packages:
+#### Installation Prerequisites:
+
+Before running the main program, ensure you have the necessary libraries installed. You can quickly set up the required dependencies by running the following command in your terminal:
 
 ```
-pip install levenshtein
-pip install tabulate
+pip install -r requirements.txt
 ```
+
+This command will automatically install the "levenshtein" and "tabulate" libraries, making your application ready to run.
 
 #### To start the bot, run the following command:
 
@@ -77,7 +80,6 @@ To change an existing contact in the address book:
 
 `change -n "Mr Smith" -p 1234567890 -e mr.smith@example.com`
 
-
 To delete an existing contact from the address book or specific fields:
 
 `delete -n "John Doe"`
@@ -137,4 +139,3 @@ To remove a tag from an existing note:
 To search notes by tags:
 
 `search-notes-by-tags important`
-
